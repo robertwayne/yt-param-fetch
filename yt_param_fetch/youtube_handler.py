@@ -11,7 +11,8 @@ class YoutubeHandler:
         """
         regex_pattern = re.compile(r'(?<=\?)(.+?)(?=&|\Z)|(?<=&)(.+?)(?=&)|(?<=/vi/)(.+?)(?=\?|\Z)|(?<=/v/)(.+?)(?=\?|\Z)|(?<=\&)(.*)(?!=\Z)|(?<=\.be/)(.?)(?=&)|(?<=\.be/)(.+?)(?=\?)|(?<=\?)(.+?)(?=\?|\Z)|(?<=\?)(.*)(?!=\Z)|(?<=\.be/)(.*)')
         video_params = regex_pattern.findall(f'{url}')
-        # Flattens the regex result and removes empty string
+
+        # flattens the regex result and removes empty string
         cleaned_video_params = list(filter(None, [item for sublist in video_params for item in sublist]))
 
         video_params_dict = {}
@@ -22,7 +23,7 @@ class YoutubeHandler:
             param_type = param_pattern.search(param)
             param_id = param_id_pattern.search(param)
 
-            # non-standard URL's using /v/, /vi/ or
+            # forces the param_type for non-standard URL's using /v/, /vi/ or /
             if param_type is None or param_id is None:
                 cleaned_param_type = 'v='
                 cleaned_param_id = param
