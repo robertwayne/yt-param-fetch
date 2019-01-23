@@ -3,13 +3,23 @@ import re
 
 class YoutubeHandler:
 
-    def get_video_params(self, url):
+    @staticmethod
+    def get_video_params(url):
         """Takes a youtube video URL (except attribution links) and returns a dictionary with each URL parameter.
 
         Keyword arguments:
             url -- a youtube url
         """
-        regex_pattern = re.compile(r'(?<=\?)(.+?)(?=&|\Z)|(?<=&)(.+?)(?=&)|(?<=/vi/)(.+?)(?=\?|\Z)|(?<=/v/)(.+?)(?=\?|\Z)|(?<=\&)(.*)(?!=\Z)|(?<=\.be/)(.?)(?=&)|(?<=\.be/)(.+?)(?=\?)|(?<=\?)(.+?)(?=\?|\Z)|(?<=\?)(.*)(?!=\Z)|(?<=\.be/)(.*)')
+        regex_pattern = re.compile(r'(?<=\?)(.+?)(?=&|\Z)|'
+                                   r'(?<=&)(.+?)(?=&)|'
+                                   r'(?<=/vi/)(.+?)(?=\?|\Z)|'
+                                   r'(?<=/v/)(.+?)(?=\?|\Z)|'
+                                   r'(?<=&)(.*)(?!=\Z)|'
+                                   r'(?<=\.be/)(.?)(?=&)|'
+                                   r'(?<=\.be/)(.+?)(?=\?)|'
+                                   r'(?<=\?)(.+?)(?=\?|\Z)|'
+                                   r'(?<=\?)(.*)(?!=\Z)|'
+                                   r'(?<=\.be/)(.*)')
         video_params = regex_pattern.findall(f'{url}')
 
         # flattens the regex result and removes empty string
