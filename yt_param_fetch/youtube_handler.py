@@ -4,8 +4,12 @@ import re
 class YoutubeHandler:
 
     def get_video_params(self, url):
-        """Takes a standard youtube video URL and returns a dictionary with each URL parameter."""
-        regex_pattern = re.compile(r'(?<=\?)(.+?)(?=&|\Z)|(?<=&)(.+?)(?=&)|(?<=&)(.+?)(?=\Z)')
+        """Takes a youtube video URL (except attribution links) and returns a dictionary with each URL parameter.
+
+        Keyword arguments:
+            url -- a youtube url
+        """
+        regex_pattern = re.compile(r'(?<=\?)(.+?)(?=&|\Z)|(?<=&)(.+?)(?=&)|(?<=/v/)(.+?)(?=\?|\Z)|(?<=&)(.*)(?!=\Z)|(?<=\.be/)(.+?)(?=\?)|(?<=\?)(.+?)(?=\?|\Z)|(?<=\?)(.*)(?!=\Z)|(?<=\.be/)(.*)')
         video_params = regex_pattern.findall(f'{url}')
         # Flattens the regex result and removes empty string
         cleaned_video_params = list(filter(None, [item for sublist in video_params for item in sublist]))
